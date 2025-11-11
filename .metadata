@@ -1,0 +1,37 @@
+# This file tracks properties of this Flutter project.
+# Used by Flutter tooling to track, build and run your flutter apps.
+# This file should be committed to version control.
+
+version:
+  revision: "5f8302bcb28c1735d6ba0b5f4caea4b8e836d01f"
+  channel: "stable"
+
+project_type: app
+
+# Tracks metadata for the flutter migrate command
+migration:
+  platforms:
+    - platform: root
+      create_base_migration: true
+    - platform: android
+      create_base_migration: true
+    - platform: ios
+      create_base_migration: true
+    - platform: linux
+      create_base_migration: true
+    - platform: macos
+      create_base_migration: true
+    - platform: web
+      create_base_migration: true
+    - platform: windows
+      create_base_migration: true
+
+  # User provided section
+
+  # List of Local modifications.
+  # They are executed in order they appear here.
+  # Note: modification can have only one property parameter
+  # followed by YAML values.
+
+  regions:
+    - uses_material_you: true
