@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 void main() {
   runApp(const MyApp());
@@ -27,9 +28,9 @@ class BreakfastScreen extends StatelessWidget {
 
   static const List<_CategoryInfo> _categories = [
     _CategoryInfo(title: 'Salad', emoji: '🥗', assetPath: null),
-    _CategoryInfo(title: 'Cake', emoji: '🎂', assetPath: 'lib/assets/icons/pancakes.svg'),
-    _CategoryInfo(title: 'Pie', emoji: '🥧', assetPath: 'lib/assets/icons/pie.svg'),
-    _CategoryInfo(title: 'Smoothie', emoji: '🧋', assetPath: 'lib/assets/icons/orange-snacks.svg'),
+    _CategoryInfo(title: 'Cake', emoji: '🎂', assetPath: 'assets/icons/pancakes.svg'),
+    _CategoryInfo(title: 'Pie', emoji: '🥧', assetPath: 'assets/icons/pie.svg'),
+    _CategoryInfo(title: 'Smoothie', emoji: '🧋', assetPath: 'assets/icons/orange-snacks.svg'),
   ];
 
   static const List<_RecommendationInfo> _recommendations = [
@@ -37,23 +38,23 @@ class BreakfastScreen extends StatelessWidget {
       title: 'Honey Pancake',
       details: 'Easy | 30mins | 180kCal',
       emoji: '🥞',
-      assetPath: 'lib/assets/icons/honey-pancakes.svg',
+      assetPath: 'assets/icons/honey-pancakes.svg',
       backgroundColor: Color(0xFFE3F2FD),
       buttonColor: Colors.blue,
     ),
     _RecommendationInfo(
-      title: 'Candi Bread',
+      title: 'Canai Bread',
       details: 'Easy | 20mins | 240kCal',
       emoji: '🧁',
-      assetPath: 'lib/assets/icons/canai-bread.svg',
+      assetPath: 'assets/icons/canai-bread.svg',
       backgroundColor: Color(0xFFF8E9F3),
       buttonColor: Colors.pink,
     ),
   ];
 
   static const List<_PopularItemInfo> _popularItems = [
-    _PopularItemInfo(title: 'Blueberry Pancake', details: 'Nutrition', emoji: '🥞'),
-    _PopularItemInfo(title: 'Salmon Nigiri', details: 'Nutrition', emoji: '🍣'),
+    _PopularItemInfo(title: 'Blueberry Pancake', details: 'Nutrition', emoji: '🥞', assetPath: 'assets/icons/blueberry-pancake.svg'),
+    _PopularItemInfo(title: 'Salmon Nigiri', details: 'Nutrition', emoji: '🍣', assetPath: 'assets/icons/salmon-nigiri.svg'),
   ];
 
   @override
@@ -124,6 +125,7 @@ class BreakfastScreen extends StatelessWidget {
                       child: _CategoryCard(
                         title: category.title,
                         emoji: category.emoji,
+                        assetPath: category.assetPath,
                         isSelected: index == 0,
                         onTap: () {},
                       ),
@@ -153,6 +155,7 @@ class BreakfastScreen extends StatelessWidget {
                         title: rec.title,
                         details: rec.details,
                         emoji: rec.emoji,
+                        assetPath: rec.assetPath,
                         backgroundColor: rec.backgroundColor,
                         buttonColor: rec.buttonColor,
                       ),
@@ -174,6 +177,7 @@ class BreakfastScreen extends StatelessWidget {
                   title: item.title,
                   details: item.details,
                   emoji: item.emoji,
+                  assetPath: item.assetPath,
                 ),
               )),
               const SizedBox(height: 20),
@@ -188,12 +192,14 @@ class BreakfastScreen extends StatelessWidget {
 class _CategoryCard extends StatelessWidget {
   final String title;
   final String emoji;
+  final String? assetPath;
   final bool isSelected;
   final VoidCallback onTap;
 
   const _CategoryCard({
     required this.title,
     required this.emoji,
+    this.assetPath,
     required this.isSelected,
     required this.onTap,
   });
@@ -212,7 +218,14 @@ class _CategoryCard extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(emoji, style: const TextStyle(fontSize: 32)),
+            if (assetPath != null)
+              SvgPicture.asset(
+                assetPath!,
+                width: 32,
+                height: 32,
+              )
+            else
+              Text(emoji, style: const TextStyle(fontSize: 32)),
             const SizedBox(height: 8),
             Text(
               title,
@@ -233,6 +246,7 @@ class _RecommendationCard extends StatelessWidget {
   final String title;
   final String details;
   final String emoji;
+  final String assetPath;
   final Color backgroundColor;
   final Color buttonColor;
 
@@ -240,6 +254,7 @@ class _RecommendationCard extends StatelessWidget {
     required this.title,
     required this.details,
     required this.emoji,
+    required this.assetPath,
     required this.backgroundColor,
     required this.buttonColor,
   });
@@ -254,10 +269,16 @@ class _RecommendationCard extends StatelessWidget {
       ),
       padding: const EdgeInsets.all(12.0),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(emoji, style: const TextStyle(fontSize: 40)),
+          Center(
+            child: SvgPicture.asset(
+              assetPath,
+              width: 60,
+              height: 60,
+            ),
+          ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -293,11 +314,13 @@ class _PopularItem extends StatelessWidget {
   final String title;
   final String details;
   final String emoji;
+  final String assetPath;
 
   const _PopularItem({
     required this.title,
     required this.details,
     required this.emoji,
+    required this.assetPath,
   });
 
   @override
@@ -310,7 +333,11 @@ class _PopularItem extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Text(emoji, style: const TextStyle(fontSize: 32)),
+          SvgPicture.asset(
+            assetPath,
+            width: 32,
+            height: 32,
+          ),
           const SizedBox(width: 12),
           Expanded(
             child: Column(
@@ -368,10 +395,12 @@ class _PopularItemInfo {
   final String title;
   final String details;
   final String emoji;
+  final String assetPath;
 
   const _PopularItemInfo({
     required this.title,
     required this.details,
     required this.emoji,
+    required this.assetPath,
   });
 }
