@@ -280,21 +280,22 @@ class _RecommendationCard extends StatelessWidget {
             ),
           ),
           Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
                 title,
                 style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
               ),
               const SizedBox(height: 4),
               Text(
                 details,
                 style: const TextStyle(fontSize: 12, color: Colors.grey),
+                textAlign: TextAlign.center,
               ),
             ],
           ),
-          Align(
-            alignment: Alignment.bottomRight,
+          Center(
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(backgroundColor: buttonColor),
               onPressed: () {},
